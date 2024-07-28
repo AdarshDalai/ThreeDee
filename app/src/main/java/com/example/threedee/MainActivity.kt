@@ -4,13 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.wear.compose.material.Scaffold
+import com.example.photopicker.View.Home
+import com.example.photopicker.View.MultiplePhotoPicker
+import com.example.photopicker.View.SinglePhotoPicker
 import com.example.threedee.ui.theme.ThreeDeeTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +23,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ThreeDeeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Scaffold {
+                val navController = rememberNavController()
+                    Column(modifier = Modifier.padding(50.dp)) {
+                        NavHost(navController = navController, startDestination = "single") {
+                            composable("home") {
+                                Home()
+                            }
+                            composable("single") {
+                                SinglePhotoPicker()
+                            }
+                            composable("multi") {
+                                MultiplePhotoPicker()
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ThreeDeeTheme {
-        Greeting("Android")
-    }
-}
