@@ -1,4 +1,4 @@
-package com.example.photopicker.View
+package com.example.threedee.view
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
@@ -67,21 +67,12 @@ fun BottomBar(navController: NavHostController){
         )
     }
 
-    var singleVideoBottomElement: BottomBarScreen by remember {
-       mutableStateOf(
-          BottomBarScreen(
-              route = "video",
-              title = "Video",
-              icon = Icons.Default.Add
-          )
-       )
-    }
+
 
     val screens = listOf(
         homeBottomElement,
         singleBottomElement,
-        multiBottomElement,
-        singleVideoBottomElement
+        multiBottomElement
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

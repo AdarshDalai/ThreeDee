@@ -11,11 +11,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.wear.compose.material.Scaffold
-import com.example.photopicker.View.Home
-import com.example.photopicker.View.MultiplePhotoPicker
-import com.example.photopicker.View.SinglePhotoPicker
+import androidx.compose.material3.Scaffold
 import com.example.threedee.ui.theme.ThreeDeeTheme
+import com.example.threedee.view.BottomBar
+import com.example.threedee.view.BottomBarScreen
+import com.example.threedee.view.Home
+import com.example.threedee.view.MultiplePhotoPicker
+import com.example.threedee.view.SinglePhotoPicker
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +25,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ThreeDeeTheme {
-                Scaffold {
+
                 val navController = rememberNavController()
-                    Column(modifier = Modifier.padding(50.dp)) {
+                Scaffold(bottomBar = { BottomBar(navController = navController) }) {
+                    innerPadding ->
+
+                    Column(modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(40.dp)) {
                         NavHost(navController = navController, startDestination = "single") {
                             composable("home") {
                                 Home()
