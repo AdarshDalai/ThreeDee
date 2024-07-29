@@ -36,6 +36,10 @@ fun MultiplePhotoPicker(){
         }
     )
 
+    var panoramaUrl by remember {
+        mutableStateOf<String?>(null)
+    }
+
     Column{
 
         LazyColumn{

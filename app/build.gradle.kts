@@ -79,4 +79,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.3.0")
     implementation ("com.google.android.exoplayer:exoplayer:2.16.1")
 
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
 }
