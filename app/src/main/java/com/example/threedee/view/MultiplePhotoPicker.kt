@@ -22,10 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.threedee.MainViewModel
 import com.example.threedee.util.StorageUtil
+import com.example.threedee.util.StorageUtil.Companion.uploadImages
 
 @Composable
-fun MultiplePhotoPicker() {
+fun MultiplePhotoPicker(viewModel: MainViewModel) {
     val context = LocalContext.current
 
     var imageUris by remember {
@@ -38,10 +40,6 @@ fun MultiplePhotoPicker() {
             imageUris = it
         }
     )
-
-    var panoramaUrl by remember {
-        mutableStateOf<String?>(null)
-    }
 
     Row {
         Column {
@@ -74,7 +72,7 @@ fun MultiplePhotoPicker() {
         }
         Spacer(modifier = Modifier.height(90.dp))
         Column {
-            Button(onClick = { uploadImages(context, imageUris) { url -> panoramaUrl = url } }) {
+            Button(onClick = { uploadImages(context, imageUris) { url -> viewModel.homeUrl.value = url } }) {
                 Text("Upload")
             }
         }

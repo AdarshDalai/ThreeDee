@@ -16,16 +16,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.threedee.MainViewModel
 
 
 @Composable
-fun Home(url: String) {
-    var panoramaUrl by remember {
-        mutableStateOf("")
-    }
+fun Home(viewModel: MainViewModel) {
+    var panoramaUrl = viewModel.homeUrl.value ?: ""
+    println(panoramaUrl)
     Column {
 
-        Button(onClick = { panoramaUrl = Uri.encode(url) }) {
+        Button(onClick = { panoramaUrl = Uri.encode(panoramaUrl) }) {
             Text(text = "Click to see panorama")
         }
         Text("Uploaded Image")
