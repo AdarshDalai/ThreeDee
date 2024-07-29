@@ -2,12 +2,7 @@ package com.example.threedee.util
 
 import android.content.Context
 import android.net.Uri
-import android.widget.Toast
 import com.example.threedee.MainActivity
-import com.example.threedee.view.parsePanoramaUrl
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -18,7 +13,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.Response
 import java.io.File
 import java.io.IOException
-import java.util.UUID
 
 class StorageUtil{
 
@@ -67,6 +61,10 @@ class StorageUtil{
 
             })
         }
+        fun parsePanoramaUrl(response: String): String? {
+            return Regex("""href="(.*?)"""").find(response)?.groupValues?.get(1)
+        }
+
 
     }
 }

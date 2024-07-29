@@ -47,9 +47,6 @@ class MainActivity : ComponentActivity() {
                                 println("from nav: $url")
                                 Home(url)
                             }
-                            composable("single") {
-                                SinglePhotoPicker()
-                            }
                             composable("multi") {
                                 MultiplePhotoPicker()
                             }

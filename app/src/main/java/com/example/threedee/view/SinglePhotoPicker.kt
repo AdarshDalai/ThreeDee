@@ -34,27 +34,4 @@ fun SinglePhotoPicker(){
 
     val context = LocalContext.current
 
-
-    Column{
-        Button(onClick = {
-            singlePhotoPicker.launch(
-                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-            )
-
-        }){
-            Text("Pick Single Image")
-        }
-
-        AsyncImage(model = uri, contentDescription = null, modifier = Modifier.size(248.dp))
-
-        Button(onClick = {
-            uri?.let{
-                StorageUtil.uploadToStorage(uri=it, context=context, type="image")
-            }
-
-        }){
-            Text("Upload")
-        }
-
-    }
 }

@@ -5,6 +5,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,10 +25,10 @@ import coil.compose.AsyncImage
 import com.example.threedee.util.StorageUtil
 
 @Composable
-fun MultiplePhotoPicker(){
+fun MultiplePhotoPicker() {
     val context = LocalContext.current
 
-    var imageUris by remember{
+    var imageUris by remember {
         mutableStateOf<List<Uri>>(emptyList())
     }
 
@@ -40,28 +43,40 @@ fun MultiplePhotoPicker(){
         mutableStateOf<String?>(null)
     }
 
-    Column{
+    Row {
+        Column {
 
-        LazyColumn{
-            item{
-                Button(onClick = {
-                    multiplePhotoPicker.launch(
-                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                    )
-                }) {
-                    Text("Pick Multiple Images")
+            LazyColumn {
+
+                item {
+                    Button(onClick = {
+                        multiplePhotoPicker.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    }) {
+                        Text("Pick Multiple Images")
+
+                    }
 
                 }
+
+                items(imageUris) { uri ->
+                    AsyncImage(
+                        model = uri,
+                        contentDescription = null,
+                        modifier = Modifier.size(248.dp)
+                    )
+                }
+
             }
 
-            items(imageUris){ uri ->
-                AsyncImage(model = uri, contentDescription = null, modifier = Modifier.size(248.dp))
-            }
 
         }
-
-        Button(onClick = { uploadImages(context, imageUris) { url -> panoramaUrl = url } }){
-            Text("Upload")
+        Spacer(modifier = Modifier.height(90.dp))
+        Column {
+            Button(onClick = { uploadImages(context, imageUris) { url -> panoramaUrl = url } }) {
+                Text("Upload")
+            }
         }
     }
 }

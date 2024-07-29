@@ -47,15 +47,7 @@ fun BottomBar(navController: NavHostController){
         )
     }
 
-    var singleBottomElement: BottomBarScreen by remember{
-        mutableStateOf(
-            BottomBarScreen(
-                route = "single",
-                title = "Single",
-                icon = Icons.Default.Add
-            )
-        )
-    }
+
 
     var multiBottomElement: BottomBarScreen by remember{
         mutableStateOf(
@@ -71,7 +63,6 @@ fun BottomBar(navController: NavHostController){
 
     val screens = listOf(
         homeBottomElement,
-        singleBottomElement,
         multiBottomElement
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
