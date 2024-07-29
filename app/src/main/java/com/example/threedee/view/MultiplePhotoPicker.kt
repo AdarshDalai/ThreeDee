@@ -56,24 +56,13 @@ fun MultiplePhotoPicker(){
 
             items(imageUris){ uri ->
                 AsyncImage(model = uri, contentDescription = null, modifier = Modifier.size(248.dp))
-
             }
 
         }
 
-        Button(onClick = {
-            imageUris.forEach{ uri ->
-
-                uri?.let{
-                    StorageUtil.uploadToStorage(uri=it, context=context, type="image")
-                }
-            }
-
-        }){
+        Button(onClick = { uploadImages(context, imageUris) { url -> panoramaUrl = url } }){
             Text("Upload")
         }
     }
-
-
 }
 
