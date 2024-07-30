@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.threedee.MainViewModel
@@ -50,13 +51,14 @@ fun Home(viewModel: MainViewModel) {
                 }
             }, modifier = Modifier.fillMaxSize())
         }
-        Column(verticalArrangement = Arrangement.Center,
+        Column(modifier = Modifier
+            .fillMaxSize(),verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
             JoystickFab(
                 onClick = { /* TODO: Handle joystick click */ },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(16.dp)
+                    .padding(8.dp)
             )
         }
     }
@@ -71,21 +73,21 @@ fun JoystickFab(
     FloatingActionButton(
         onClick = onClick,
         modifier = modifier
-            .size(100.dp)
-            .border(4.dp, Color.Black, CircleShape), // Add a border to make it look like a joystick
+            .size(50.dp)
+            .border(4.dp, Color.White, CircleShape), // Add a border to make it look like a joystick
         shape = CircleShape,
         content = {
             Box(
                 modifier = Modifier
-                    .size(50.dp)
-                    .background(Color.Black, CircleShape),
+                    .size(30.dp)
+                    .background(Color.White, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     Icons.Filled.LocationOn,
                     contentDescription = "Joystick",
                     tint = Color.White,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(20.dp)
                 )
             }
         })
