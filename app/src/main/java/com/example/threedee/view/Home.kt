@@ -51,7 +51,7 @@ fun Home(viewModel: MainViewModel) {
                 }
             }, modifier = Modifier.fillMaxSize())
         }
-        Column(modifier = Modifier
+        /*Column(modifier = Modifier
             .fillMaxSize(),verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
             JoystickFab(
@@ -60,7 +60,7 @@ fun Home(viewModel: MainViewModel) {
                     .align(Alignment.CenterHorizontally)
                     .padding(8.dp)
             )
-        }
+        }*/
     }
 }
 
