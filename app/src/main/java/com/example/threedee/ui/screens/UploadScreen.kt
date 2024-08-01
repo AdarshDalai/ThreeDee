@@ -1,5 +1,13 @@
 package com.example.threedee.ui.screens
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +29,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,8 +39,19 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UploadScreen() {
-    val retrievedFile = remember {
-        mutableStateOf("")
+    val context = LocalContext.current
+    val retrievedImage = remember { mutableStateOf<Bitmap?>(null) }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            if (Build.VERSION.SDK_INT < 28) {
+                retrievedImage.value = MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+            } else {
+                val source = ImageDecoder.createSource(context.contentResolver, it)
+                retrievedImage.value = ImageDecoder.decodeBitmap(source)
+            }
+        }
     }
 
     Scaffold(
@@ -54,7 +75,7 @@ fun UploadScreen() {
                         .padding(16.dp)
                 ) {
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = { launcher.launch("image/*") },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Row {
@@ -67,9 +88,9 @@ fun UploadScreen() {
                     }
                 }
             }
-            if (retrievedFile.value.isNotEmpty()) {
+            if (retrievedImage.value != null) {
                 Row() {
-                    ViewCard()
+                    ViewCard(image = retrievedImage.value)
                 }
             }
         }
@@ -77,13 +98,15 @@ fun UploadScreen() {
 }
 
 @Composable
-fun ViewCard() {
+fun ViewCard(image: Bitmap?) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxSize()
     ) {
-
+        image?.let {
+            Image(bitmap = it.asImageBitmap(), contentDescription = null)
+        }
     }
 }
 
@@ -97,5 +120,6 @@ fun UploadScreenPreview() {
 @Preview(showBackground = true)
 @Composable
 fun ViewCardPreview() {
-    ViewCard()
+    // In a real scenario, you'd pass a Bitmap here
+    ViewCard(image = null)
 }

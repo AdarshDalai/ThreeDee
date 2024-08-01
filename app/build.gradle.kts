@@ -69,6 +69,8 @@ dependencies {
     implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -79,4 +81,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.3.0")
     implementation ("com.google.android.exoplayer:exoplayer:2.16.1")
 
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
+    implementation("androidx.fragment:fragment-ktx:1.5.0")
+    implementation("com.github.hannesa2:panoramagl:1.11")
 }

@@ -1,53 +1,56 @@
 package com.example.threedee
 
+import android.R
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.compose.material3.Scaffold
+import com.example.threedee.ui.screens.UploadScreen
 import com.example.threedee.ui.theme.ThreeDeeTheme
-import com.example.threedee.view.BottomBar
-import com.example.threedee.view.BottomBarScreen
-import com.example.threedee.view.Home
-import com.example.threedee.view.MultiplePhotoPicker
-import com.example.threedee.view.SinglePhotoPicker
+import com.panoramagl.PLImage
+import com.panoramagl.PLManager
+import com.panoramagl.PLSphericalPanorama
+import com.panoramagl.utils.PLUtils
+
 
 class MainActivity : ComponentActivity() {
+    private var plManager: PLManager? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        plManager = PLManager(this)
         enableEdgeToEdge()
         setContent {
             ThreeDeeTheme {
-
-                val navController = rememberNavController()
-                Scaffold(bottomBar = { BottomBar(navController = navController) }) {
-                    innerPadding ->
-
-                    Column(modifier = Modifier
-                        .padding(innerPadding)
-                        .padding(40.dp)) {
-                        NavHost(navController = navController, startDestination = "single") {
-                            composable("home") {
-                                Home()
-                            }
-                            composable("single") {
-                                SinglePhotoPicker()
-                            }
-                            composable("multi") {
-                                MultiplePhotoPicker()
-                            }
-                        }
-                    }
-                }
+                UploadScreen()
             }
         }
+        plManager!!.onCreate()
+
+        val panorama = PLSphericalPanorama()
+        panorama.camera.lookAt(30.0f, 90.0f)
+
+        //panorama.setImage(PLImage(PLUtils.getBitmap(this, ), false))
+        plManager!!.panorama = panorama
+    }
+    override fun onResume() {
+        super.onResume()
+        plManager!!.onResume()
+    }
+
+    override fun onPause() {
+        plManager!!.onPause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        plManager!!.onDestroy()
+        super.onDestroy()
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return plManager!!.onTouchEvent(event!!)
     }
 }
 
